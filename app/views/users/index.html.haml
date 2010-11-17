@@ -1,0 +1,38 @@
+%h2
+	%img{:src => "/images/icons/user_32.png", :alt => "All users"}
+	All users
+
+.content-box
+	.content-box-header
+		%h3 Users
+	
+	.content-box-content
+		%table{:class => "pagination", :rel => "10"}
+			%thead
+				%tr
+					%th
+						ID
+					%th
+						Email
+					%th
+						Acties
+			
+			%tfoot
+				%tr
+					%td{:colspan => "2"}
+						.bulk-actions
+						
+			%tbody
+				
+				- @users.each do |user|
+				
+					%tr
+						%td= user.id
+						%td= user.email
+						%td
+							= link_to 'Show', user
+							
+							- if current_user.friends.any? { |friend| friend == user }
+								Already a friend
+							- else
+								= button_to 'Add Friend', friendships_path(:friend_id => user), :method => :post

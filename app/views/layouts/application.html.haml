@@ -1,0 +1,38 @@
+!!!
+%html{:lang => "en"}
+	%head
+		%meta{:charset => "utf-8"}
+		%title Facebook	
+		= stylesheet_link_tag 'reset.css'
+		= stylesheet_link_tag 'main.css'
+		= stylesheet_link_tag 'css3.css'
+		= stylesheet_link_tag 'custom-theme/jquery-ui-1.8.1.custom.css'
+		= csrf_meta_tag
+		
+		= javascript_include_tag 'jquery-1.4.2.min.js'
+		= javascript_include_tag 'jquery-ui.min.js'
+		= javascript_include_tag 'jquery.wysiwyg.js'
+		= javascript_include_tag 'excanvas.js'
+		= javascript_include_tag 'jquery.visualize.js'
+		= javascript_include_tag 'script.js'
+	
+	%body
+		#bokeh
+			#container
+				#header
+					%h1#logo Admin Control Panel
+					
+					#header_buttons
+						- if user_signed_in?
+							= link_to "#{current_user.email} sign out", destroy_user_session_path
+						- else
+							= link_to "Sign up", new_user_registration_path
+							= link_to "Sign in", new_user_session_path
+					
+				#content
+				
+					-flash.each do |key, msg|
+						%div{:class => "notification " + key.to_s}
+							=msg
+				
+					=yield
